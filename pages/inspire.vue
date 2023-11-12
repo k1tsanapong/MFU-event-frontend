@@ -3,9 +3,9 @@ import { createVuetify} from 'vuetify'
   <v-app>
     <!-- Your custom app bar goes here -->
     <v-app-bar app color="#8F2B31"></v-app-bar>
-    <v-container class="search-container">
+    <v-container cols="12" md="3" class="search-container">
       <!-- Search bar and button in the same column -->
-      <v-col xs="12" sm="8">
+      <v-col >
         <v-row align="center">
           <v-col>
             <v-text-field
@@ -32,6 +32,7 @@ import { createVuetify} from 'vuetify'
           </v-col>
         </v-row>
       </v-col>
+      <v-checkbox label="Ongoing Events" class="checkbox-round"></v-checkbox>
     </v-container>
   </v-app>
 </template>
@@ -54,5 +55,8 @@ export default {
 }
 .search-text-field {
   background-color: white;
+}
+.checkbox-round {
+  
 }
 </style>
