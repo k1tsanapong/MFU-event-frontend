@@ -2,17 +2,21 @@
   <v-app dark>
 
 
-    <v-app-bar
-      app
-      color="rgb(143, 43, 49)"
-      height="200"
-    >
+    <v-app-bar app color="rgb(143, 43, 49)" height="170%">
 
-    <v-spacer></v-spacer>
-        <div class="HeadMark">
-          <span class="HeadMarkText">What is MFU EVENTS?</span>
-        </div>
-        <v-spacer></v-spacer>
+        <img src="/mfueventlogo.png" alt="eventLogo" class="logoevent">
+
+
+      <v-card class="headcard">
+      <v-card-text>
+        <p class="HeadMarkText">
+          What is MFU EVENTS?
+        </p>
+      </v-card-text>
+      </v-card>
+
+
+
 
     </v-app-bar>
     <v-main>
@@ -24,32 +28,71 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-    }
-  }
-}
+    };
+  },
+
+};
 </script>
 
 <style scoped>
 @import url('typeface-montserrat');
 
-.HeadMark {
-  height: 150px;
-  width: 850px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(232, 183, 26);
-  border-radius: 60px;
+.logoevent {
+  height: 50%;
+  width: 150px;
 
+  border-radius: 10%;
 
 }
+
+
+.headcard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-radius: 60px;
+  background-color: rgb(232, 183, 26);
+  height: 50%;
+  width: max-content;
+}
+
 
 .HeadMarkText {
   color: black;
   font-weight: 650;
   font-family: 'Montserrat', sans-serif;
-  font-size: 60px;
+  font-size:250%;
+  text-align: center;
+
+  margin-top: 13px;
+  margin-left: 10%;
+  margin-right: 10%;
+
+
 }
+
+@media (max-width: 900px) {
+  .HeadMarkText {
+    font-size: 20px; /* Adjust font size for screens below 900px */
+  }
+}
+
+@media (max-width: 600px) {
+  .HeadMarkText {
+    font-size: 16px; /* Adjust font size for screens below 600px */
+  }
+}
+
+@media (max-width: 400px) {
+  .HeadMarkText {
+    font-size: 10px; /* Adjust font size for screens below 300px */
+  }
+}
+
+
 </style>
