@@ -3,11 +3,11 @@ import { createVuetify} from 'vuetify'
   <v-app>
     <!-- Your custom app bar goes here -->
     <v-app-bar app color="#8F2B31"></v-app-bar>
-    <v-container cols="12" md="3" class="search-container">
+    <v-container class="search-container">
       <!-- Search bar and button in the same column -->
-      <v-col >
+      <v-col>
         <v-row align="center">
-          <v-col>
+          <v-col xs="12" sm="8" md="6" lg="4">
             <v-text-field
               v-model="search"
               label="Search"
@@ -22,17 +22,24 @@ import { createVuetify} from 'vuetify'
               </template>
             </v-text-field>
           </v-col>
-          <v-col class="text-right" xs="12" sm="4">
+          <v-col class="text-right" xs="12" sm="4" md="3" lg="2">
             <v-btn @click="handleSort"
               >Sort
-              <template>
-                <v-icon>mdi-sort</v-icon>
-              </template>
+              <v-icon>mdi-sort</v-icon>
             </v-btn>
           </v-col>
         </v-row>
+        <v-radio-group v-model="selectedStatus" row>
+          <v-radio
+            v-for="(label, value) in statusOptions"
+            :key="value"
+            :label="label"
+            :value="value"
+            color="black"
+            class="mr-3"
+          ></v-radio>
+        </v-radio-group>
       </v-col>
-      <v-checkbox label="Ongoing Events" class="checkbox-round"></v-checkbox>
     </v-container>
   </v-app>
 </template>
@@ -42,7 +49,17 @@ export default {
   data() {
     return {
       search: "",
+      statusOptions: {
+        OnEvents: "Ongoing Events",
+        UpEvents: "Upcoming Events",
+        ExpEvents: "Expired Events",
+      },
     };
+  },
+  methods: {
+    handleSort() {
+      // Add your sorting logic here
+    },
   },
 };
 </script>
@@ -55,8 +72,5 @@ export default {
 }
 .search-text-field {
   background-color: white;
-}
-.checkbox-round {
-  
 }
 </style>
