@@ -6,7 +6,7 @@ import { createVuetify} from 'vuetify'
     <v-container class="search-container">
       <!-- Search bar and button in the same column -->
       <v-col>
-        <v-row align="center">
+        <v-row justify="space-between" align="center">
           <v-col xs="12" sm="8" md="6" lg="4">
             <v-text-field
               v-model="search"
@@ -30,7 +30,7 @@ import { createVuetify} from 'vuetify'
           </v-col>
         </v-row>
         <v-radio-group v-model="selectedStatus" row>
-          <v-radio
+          <v-radio 
             v-for="(label, value) in statusOptions"
             :key="value"
             :label="label"
@@ -72,5 +72,8 @@ export default {
 }
 .search-text-field {
   background-color: white;
+}
+.v-input--radio-group__input {
+    justify-content: space-evenly;
 }
 </style>
