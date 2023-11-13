@@ -6,12 +6,7 @@
         <v-card class="centercard">
           <v-card-text>
             <p class="maintext">
-              Welcome to MFUEVENT
-              You can look around what events
-              and activities are going on around
-              the school
-              If you would like to request your events to be posted
-              please contact (Phone number)
+
             </p>
           </v-card-text>
           <v-card-actions>
@@ -28,7 +23,7 @@
 
 <script>
 export default {
-  name: 'IndexPage'
+  name: 'AdLogin'
 }
 </script>
 

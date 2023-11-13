@@ -43,7 +43,7 @@ import { createVuetify} from 'vuetify'
 
 <script>
 export default {
-  name: 'inspire',
+  name: 'homepage',
   data() {
     return {
       search: "",
