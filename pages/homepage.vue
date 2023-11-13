@@ -69,7 +69,7 @@ export default {
   width: 60%; /* Adjust the width as needed */
   max-width: 1200px;
   margin: 40px auto;
-  padding: 40px ;
+  padding: 35px 10px 0px ; 
 }
 
 .search-text-field {
