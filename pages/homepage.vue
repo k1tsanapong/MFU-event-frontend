@@ -1,6 +1,6 @@
 import { createVuetify} from 'vuetify'
 <template>
-  <v-app>
+  <div>
     <v-container class="search-container" fluid>
       <v-row justify="center" align="center">
         <v-col align="center">
@@ -20,7 +20,9 @@ import { createVuetify} from 'vuetify'
         </v-col>
 
         <v-col xs="12" sm="4" md="4" lg="2">
-          <v-btn rounded @click="handleSort">Sort <v-icon>mdi-sort</v-icon></v-btn>
+          <v-btn rounded @click="handleSort"
+            >Sort <v-icon>mdi-sort</v-icon></v-btn
+          >
         </v-col>
 
         <v-col xs="12" sm="12" md="12" lg="12">
@@ -37,14 +39,46 @@ import { createVuetify} from 'vuetify'
         </v-col>
       </v-row>
     </v-container>
-  </v-app>
+
+    <v-container>
+      <v-row>
+        <v-col
+          v-for="(item, i) in all_event"
+          :key="item.id"
+          cols="4"
+          class="px-10"
+        >
+          <Event :a_event="item" />
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-btn
+      v-show="fab"
+      fab
+      dark
+      fixed
+      bottom
+      right
+      color="brown"
+      size="125"
+      @click="toTop"
+    >
+      <v-icon size="50" class="font-weight-bold">mdi-plus</v-icon>
+    </v-btn>
+  </div>
 </template>
 
 <script>
+import mockData from "@/static/mockData.json";
+
 export default {
-  name: 'homepage',
+  name: "homepage",
   data() {
     return {
+      fab: true, // Ensure 'fab' is defined in your data
+
+      all_event: mockData,
       search: "",
       selectedStatus: null,
       statusOptions: {
@@ -58,6 +92,10 @@ export default {
     handleSort() {
       // Add your sorting logic here
     },
+  
+    toTop() {
+      this.$router.push( 'festival/new' );
+    },
   },
 };
 </script>
@@ -69,7 +107,7 @@ export default {
   width: 60%; /* Adjust the width as needed */
   max-width: 1200px;
   margin: 40px auto;
-  padding: 35px 10px 0px ; 
+  padding: 35px 10px 0px;
 }
 
 .search-text-field {
@@ -77,7 +115,7 @@ export default {
   width: 80%;
 }
 .v-input--radio-group__input {
-    justify-content: space-evenly;
+  justify-content: space-evenly;
 }
 
 /* Additional styling as needed */

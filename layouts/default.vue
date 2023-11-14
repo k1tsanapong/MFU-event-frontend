@@ -1,8 +1,10 @@
 <template>
   <v-app dark>
     <v-app-bar app color="rgb(143, 43, 49)" height="170%">
-      <img src="/mfueventlogo.png" alt="eventLogo" class="logoevent">
+      <nuxt-link to="/homepage">
 
+      <img src="/mfueventlogo.png" alt="eventLogo" class="logoevent">
+</nuxt-link>
       <v-card class="headcard">
         <v-card-text>
           <p class="HeadMarkText">
