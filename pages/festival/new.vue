@@ -64,8 +64,11 @@
               <div class="text-h5 font-weight-regular">Shcool</div>
             </v-col>
             <v-col cols="12">
-              <v-autocomplete outlined :items="schools" v-model="selcetSchool"></v-autocomplete>
-
+              <v-autocomplete
+                outlined
+                :items="schools"
+                v-model="selcetSchool"
+              ></v-autocomplete>
             </v-col>
           </v-row>
 
@@ -80,9 +83,34 @@
 
           <v-row class="d-flex flex-column" no-gutters>
             <v-col cols="12">
+              <div class="text-h5 font-weight-regular">Time</div>
+            </v-col>
+            <v-col cols="12">
+              <v-datetime-picker label="Select Datetime" v-model="datetime">
+              </v-datetime-picker>
+            </v-col>
+          </v-row>
+
+          <v-row class="d-flex flex-column" no-gutters>
+            <v-col cols="12">
               <div class="text-h5 font-weight-regular">Description</div>
             </v-col>
             <v-col cols="12"> <v-textarea outlined></v-textarea> </v-col>
+          </v-row>
+
+          <v-row class="d-flex flex-column" no-gutters>
+            <v-col cols="12">
+              <div class="text-h5 font-weight-regular">Tags</div>
+            </v-col>
+            <v-col cols="12">
+              <v-autocomplete
+                outlined
+                :items="tags"
+                v-model="selcetTags"
+                multiple
+                chips
+              ></v-autocomplete>
+            </v-col>
           </v-row>
 
           <v-row class="d-flex flex-column" no-gutters>
@@ -94,9 +122,15 @@
             </v-col>
           </v-row>
 
-          <v-row>
-            <v-col cols="1">
-              <v-btn color="green" type="submit"> New </v-btn>
+          <v-row justify="center">
+            <v-col cols="2">
+              <v-card @click="createNewOne" color="#E8B71A" rounded="pill" class="pa-3" >
+               
+                      <div class="text-center font-weight-bold text-h4">
+                        Create
+                    </div>
+                  
+              </v-card>
             </v-col>
           </v-row>
         </v-form>
@@ -135,19 +169,30 @@ export default {
   name: "imageUpload",
   data() {
     return {
+      datetime: null,
 
-        schools:[
-            "Death","Day"
-        ],
+      selcetTags: null,
 
-        selcetSchool:null,
+      tags: [
+        "Blushing",
+        "Comedy",
+        "Drugs",
+        "Dubious consent",
+        "Ecchi",
+        "Harem",
+        "NSFW",
+        "School girl",
+        "Yuri",
+      ],
+      schools: ["Death", "Day"],
+
+      selcetSchool: null,
 
       scan_overlay: false,
 
       previewImage: null,
       image: null,
       show: true,
-    
     };
   },
   methods: {
@@ -208,6 +253,12 @@ export default {
     onLoaded() {
       console.log(`Ready to start scanning barcodes`);
     },
+
+    createNewOne()
+    {
+        console.log(`TEsts`);
+
+    }
   },
 }; // missing closure added
 </script>
