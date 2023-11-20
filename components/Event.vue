@@ -1,17 +1,17 @@
 <template>
-  <v-card color="#C78186" :to="'/festival/'+a_event.event_id">
+  <v-card color="#C78186" :to="'/festival/'+a_event.event_id" rounded="xxl">
     <div class="mb-3">
-      <v-img :src="a_event.event_img" max-height="300"> </v-img>
+      <v-img :src="a_event.event_img" height="300" style="border-radius: 12px; object-fit: cover;"> </v-img>
 
       <div class="pt-3 pb-1 px-3 white--text">{{ a_event.event_title }}</div>
       <div class="pt-3 pb-1 px-3 white--text">School of {{ a_event.event_school }}</div>
 
       <div class="pt-3 pb-1 px-3 white--text">{{ a_event.event_date }}</div>
 
-      <div class="pt-3 pb-1 px-3 white--text">{{ a_event.event_participant }}-{{ a_event.event_limit }}</div>
+      <divxxl class="pt-3 pb-1 px-3 white--text">{{ a_event.event_participant }}-{{ a_event.event_limit }}</divxxl>
     </div>
 
-    <v-card color="#D9D9D9">
+    <v-card color="#D9D9D9" >
       <div
         class="pt-3 pb-1 px-3 black--text d-flex justify-center align-center"
       >

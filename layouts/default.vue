@@ -1,19 +1,5 @@
 <template>
   <v-app dark>
-    <v-app-bar app color="rgb(143, 43, 49)" height="170%">
-      <nuxt-link to="/homepage">
-
-      <img src="/mfueventlogo.png" alt="eventLogo" class="logoevent">
-</nuxt-link>
-      <v-card class="headcard">
-        <v-card-text>
-          <p class="HeadMarkText">
-            What is MFU EVENTS?
-          </p>
-        </v-card-text>
-      </v-card>
-    </v-app-bar>
-
     <v-main>
       <nuxt />
     </v-main>
@@ -29,38 +15,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('typeface-montserrat');
-
-.logoevent {
-  height: 50%;
-  width: 150px;
-  border-radius: 10%;
-}
-
-.headcard {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  margin-left: 10%;
-  margin-right: 10%;
-  border-radius: 60px;
-  background-color: rgb(232, 183, 26);
-  height: 50%;
-  width: max-content;
-}
-
-.HeadMarkText {
-  color: black;
-  font-weight: 650;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 250%;
-  text-align: center;
-  margin-top: 13px;
-  margin-left: 10%;
-  margin-right: 10%;
-}
-
 @media (max-width: 900px) {
   .HeadMarkText {
     font-size: 20px;

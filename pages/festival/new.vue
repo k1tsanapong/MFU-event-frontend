@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col class="d-flex justify-center align-start" cols="1">
-      <nuxt-link to="/homepage">
+      <nuxt-link to="/home">
         <v-icon
           style="transform: scaleX(-1); color: brown"
           class="rotate-180"
@@ -61,7 +61,7 @@
 
           <v-row class="d-flex flex-column" no-gutters>
             <v-col cols="12">
-              <div class="text-h5 font-weight-regular">Shcool</div>
+              <div class="text-h5 font-weight-regular">School</div>
             </v-col>
             <v-col cols="12">
               <v-autocomplete

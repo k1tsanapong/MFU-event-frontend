@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col class="d-flex justify-center align-start" cols="1">
-      <nuxt-link to="/homepage">
+      <nuxt-link to="/home">
         <v-icon
           style="transform: scaleX(-1); color: brown"
           class="rotate-180"
@@ -74,7 +74,7 @@
       </v-card>
     </v-col>
 
-    <v-col class="d-flex justify-center align-end" cols="1">
+    <v-col class="d-flex justify-center align-end" cols="1" v-if="isLoggedIn">
       <v-row>
         <v-col cols="12">
           <v-icon @click="editDialog = true"  style="color: brown" class="rotate-180" size="120">
