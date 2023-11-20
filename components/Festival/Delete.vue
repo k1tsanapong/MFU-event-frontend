@@ -16,7 +16,7 @@
       <v-row class="mt-4">
         <v-col class="d-flex justify-center">
           <!-- <v-btn @click="handleYes" color="success">Yes</v-btn> -->
-          <my-btn color="#a52a2a" rounded="xl" width="100px">Yes</my-btn>
+          <nuxt-link to="/home" class="yeslink"> <my-btn color="#a52a2a" rounded="xl" width="100px">Yes</my-btn> </nuxt-link>
         </v-col>
 
         <v-col class="d-flex justify-center">
@@ -56,5 +56,8 @@ export default {
   border: 5px solid #a52a2a;
   border-radius: 50px;
   padding: 16px;
+}
+.yeslink {
+  text-decoration: none;
 }
 </style>

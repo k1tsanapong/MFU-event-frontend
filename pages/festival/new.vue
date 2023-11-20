@@ -125,11 +125,11 @@
           <v-row justify="center">
             <v-col cols="2">
               <v-card @click="createNewOne" color="#E8B71A" rounded="pill" class="pa-3" >
-               
+
                       <div class="text-center font-weight-bold text-h4">
                         Create
                     </div>
-                  
+
               </v-card>
             </v-col>
           </v-row>

@@ -84,7 +84,7 @@ import { createVuetify} from 'vuetify'
       </v-container>
 
       <v-btn
-        v-show="fab && isLoggedIn"
+        v-show="fab"
         fab
         dark
         fixed

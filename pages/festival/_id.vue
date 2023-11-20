@@ -65,7 +65,7 @@
           <v-row>
             <v-col cols="12">
               <div class="pt-3 pb-1 white--text font-weight-bold">
-                Description
+                Contact Host
                 {{ a_event.event_contact }}
               </div>
             </v-col>
@@ -74,7 +74,7 @@
       </v-card>
     </v-col>
 
-    <v-col class="d-flex justify-center align-end" cols="1" v-if="isLoggedIn">
+    <v-col class="d-flex justify-center align-end" cols="1" >
       <v-row>
         <v-col cols="12">
           <v-icon @click="editDialog = true"  style="color: brown" class="rotate-180" size="120">
@@ -84,7 +84,7 @@
 
         <v-col cols="12">
           <v-icon
-          @click="deleteDialog = true" 
+          @click="deleteDialog = true"
           style="color: gold"
           class="rotate-180"
           size="120"
@@ -109,7 +109,7 @@ export default {
     return {
       editDialog: false,
       deleteDialog: false,
-      isLoggedIn: false,
+
       a_event: {
         event_id: 1,
         event_title:
@@ -140,7 +140,7 @@ export default {
   },
 
   methods: {
-  
+
   },
 };
 </script>
