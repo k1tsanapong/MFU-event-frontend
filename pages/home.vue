@@ -24,7 +24,7 @@ import { createVuetify} from 'vuetify'
           <v-list-item v-on:click="handleProfile">
             <v-list-item-title>Profile</v-list-item-title>
           </v-list-item>
-          <v-list-item v-on:click="handleLogin">
+          <v-list-item  v-if="!isLoggedIn" v-on:click="handleLogin">
             <v-list-item-title>Login</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -108,7 +108,7 @@ export default {
   data() {
     return {
       fab: true, // Ensure 'fab' is defined in your data
-      appHeaderText: "What is MFU EVENTS?",
+      isLoggedIn: false,
       all_event: mockData,
       search: "",
       selectedStatus: null,
@@ -127,7 +127,7 @@ export default {
       // Handle profile click
     },
     handleLogin() {
-      this.$router.push("/adlog");
+       this.isLoggedIn = true;
     },
     toTop() {
       this.$router.push("festival/new");

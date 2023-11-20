@@ -109,7 +109,7 @@ export default {
     return {
       editDialog: false,
       deleteDialog: false,
-
+      isLoggedIn: false,
       a_event: {
         event_id: 1,
         event_title:
