@@ -88,8 +88,8 @@
       </v-card>
     </v-col>
 
-    <v-col class="d-flex justify-center align-end" cols="1">
-      <v-row>
+    <v-col class="d-flex justify-center align-end" cols="1" >
+      <v-row v-if="$auth.loggedIn">
         <v-col cols="12">
           <v-icon
             @click="deleteDialog = true"

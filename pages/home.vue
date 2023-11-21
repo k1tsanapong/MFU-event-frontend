@@ -56,6 +56,7 @@ import { createVuetify} from 'vuetify'
       </v-container>
 
       <v-btn
+      v-if="$auth.loggedIn"
         v-show="fab"
         fab
         dark

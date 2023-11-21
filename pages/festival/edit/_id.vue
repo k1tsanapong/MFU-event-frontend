@@ -182,6 +182,7 @@
 <script>
 export default {
   name: "imageUpload",
+  middleware: ["auth"],
   data() {
     return {
       tags: [],

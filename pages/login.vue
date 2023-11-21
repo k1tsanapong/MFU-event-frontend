@@ -34,7 +34,7 @@
             </v-row>
           </v-card-text>
           <v-row justify="center" class="mt-1">
-            <v-col cols="5">
+            <v-col @click="userLogin" cols="5">
               <v-card
                 color="#E8B71A"
                 rounded="pill"
@@ -56,35 +56,24 @@
 
 <script>
 export default {
-  name: "AdLogin",
-
+  auth: 'guest',
+  data() {
+    return {
+      err: null,
+      username: "",
+      password: "",
+    }
+  },
   methods: {
-    async login() {
+    async userLogin() {
       try {
-        // Replace the following API endpoint with your actual backend login endpoint
-        const response = await this.$axios.post("/api/login", {
-          username: this.username,
-          password: this.password,
-        });
-
-        // Assuming your backend returns a success status
-        if (response.data.success) {
-          this.isLoggedIn = true;
-        } else {
-        }
-      } catch (error) {
-        console.error("Error during login:", error);
-        // Handle other errors (network issues, server errors, etc.)
+        await this.$auth.loginWith('local', {
+          data: { identifier: this.username, password: this.password },
+        })
+      } catch (e) {
+        if (e.response) this.err = e.response.data.error.message
       }
     },
   },
-
-  data() {
-    return {
-      username: "",
-      password: "",
-      isLoggedIn: true,
-    };
-  },
-};
+}
 </script>

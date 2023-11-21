@@ -113,11 +113,11 @@ export default {
         },
         endpoints: {
           login: {
-            url: 'auth/local',
+            url: '/api/auth/local',
             method: 'post',
           },
           user: {
-            url: 'users/me',
+            url: '/api/users/me',
             method: 'get',
           },
           logout: false,

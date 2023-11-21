@@ -25,8 +25,11 @@
           <v-list-item @click="handleProfile">
             <v-list-item-title >Profile</v-list-item-title>
           </v-list-item>
-          <v-list-item  v-if="!isLoggedIn" @click="handleLogin">
+          <v-list-item  v-if="!$auth.loggedIn" @click="handleLogin">
             <v-list-item-title>Login</v-list-item-title>
+          </v-list-item>
+          <v-list-item v-else @click="handleLogout">
+            <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -83,6 +86,11 @@ export default {
        this.isLoggedIn = true;
        this.$router.push("/login");
 
+    },
+
+    handleLogout() {
+      this.$auth.logout();
+      this.$router.push("/");
     },
     toTop() {
       this.$router.push("festival/new");
