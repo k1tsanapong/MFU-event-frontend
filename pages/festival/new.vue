@@ -204,13 +204,13 @@ export default {
   async fetch() {
     try {
       const res1 = await this.$axios.get(
-        `http://localhost:1337/api/schools`
+        `/api/schools`
       );
 
       this.schools = res1.data.data;
 
       const res2 = await this.$axios.get(
-        `http://localhost:1337/api/tags`
+        `/api/tags`
       );
 
       this.tags = res2.data.data;
