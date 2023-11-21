@@ -1,14 +1,14 @@
 <template>
-  <v-card color="#C78186" :to="'/festival/'+a_event.event_id" rounded="xxl">
+  <v-card color="#C78186" :to="'/festival/'+a_event.id" rounded="xxl">
     <div class="mb-3">
-      <v-img :src="a_event.event_img" height="300" style="border-radius: 12px; object-fit: cover;"> </v-img>
+      <v-img :src="urlImg" height="300" style="border-top-right-radius: 20px; border-top-left-radius: 20px;  object-fit: cover;"> </v-img>
 
-      <div class="pt-3 pb-1 px-3 white--text">{{ a_event.event_title }}</div>
-      <div class="pt-3 pb-1 px-3 white--text">School of {{ a_event.event_school }}</div>
+      <div class="pt-3 pb-1 px-3 white--text">{{ a_event.attributes.title }}</div>
+      <div class="pt-3 pb-1 px-3 white--text">School of {{ a_event.attributes.school.data.attributes.name }}</div>
 
-      <div class="pt-3 pb-1 px-3 white--text">{{ a_event.event_date }}</div>
+      <div class="pt-3 pb-1 px-3 white--text">Time : {{   $moment(a_event.attributes.dateTimeStart ).format("DD-MM-YYYY") }} : {{   $moment(a_event.attributes.dateTimeStart ).format("hh:mm") }}</div>
 
-      <divxxl class="pt-3 pb-1 px-3 white--text">{{ a_event.event_participant }}-{{ a_event.event_limit }}</divxxl>
+      <div class="pt-3 pb-1 px-3 white--text">{{ a_event.attributes.limit }}</div>
     </div>
 
     <v-card color="#D9D9D9" >
@@ -26,5 +26,15 @@
 export default {
   name: "event",
   props: ["a_event"],
+
+  data() {
+    return {
+      urlImg: "",
+    };
+  },
+
+  created() {
+    this.urlImg = process.env.AXIOS_URL+this.a_event.attributes.cover.data?.attributes?.url;
+  },
 };
 </script>

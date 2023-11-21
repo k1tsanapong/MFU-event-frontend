@@ -14,13 +14,13 @@
 
     <v-col cols="10" class="d-flex justify-center my-12">
       <v-card class="pb-12" color="#C78186" max-width="100rem" rounded="xl">
-        <v-img :src="a_event.event_img" max-height="300" />
+        <v-img :src="urlImg" max-height="300" />
 
         <div class="px-6">
           <v-row>
             <v-col cols="12">
               <div class="pt-12 pb-1 white--text font-weight-bold">
-                Title: {{ a_event.event_title }}
+                Title: {{ event_data.attributes?.title }}
               </div>
             </v-col>
           </v-row>
@@ -28,13 +28,25 @@
           <v-row>
             <v-col cols="6">
               <div class="pt-3 pb-1 white--text font-weight-bold">
-                School: {{ a_event.event_school }}
+                School:
+                {{ event_data.attributes?.school?.data?.attributes?.name }}
               </div>
             </v-col>
 
             <v-col cols="6">
               <div class="pt-3 pb-1 white--text font-weight-bold">
-                Time: {{ a_event.event_date }}
+                Time:
+                {{
+                  $moment(event_data.attributes?.dateTimeStart).format(
+                    "DD/MM/YYYY HH:mm"
+                  )
+                }}
+                -
+                {{
+                  $moment(event_data.attributes?.dateTimeEnd).format(
+                    "DD/MM/YYYY HH:mm"
+                  )
+                }}
               </div>
             </v-col>
           </v-row>
@@ -43,7 +55,7 @@
             <v-col cols="12">
               <div class="pt-3 pb-1 white--text font-weight-bold">
                 Description <br />
-                {{ a_event.event_description }}
+                {{ event_data.attributes?.description }}
               </div>
             </v-col>
           </v-row>
@@ -54,11 +66,13 @@
             >
 
             <v-col
-              v-for="(tag, index) in a_event.event_tags"
+              v-for="(tag, index) in event_data.attributes?.tags?.data"
               :key="index"
               cols="auto"
             >
-              <v-chip :color="tag.color" label>{{ tag.text }}</v-chip>
+              <v-chip :color="tag.attributes?.hexColor" label>{{
+                tag.attributes?.name
+              }}</v-chip>
             </v-col>
           </v-row>
 
@@ -66,7 +80,7 @@
             <v-col cols="12">
               <div class="pt-3 pb-1 white--text font-weight-bold">
                 Contact Host
-                {{ a_event.event_contact }}
+                {{ event_data.attributes?.contact }}
               </div>
             </v-col>
           </v-row>
@@ -74,31 +88,38 @@
       </v-card>
     </v-col>
 
-    <v-col class="d-flex justify-center align-end" cols="1" >
+    <v-col class="d-flex justify-center align-end" cols="1">
       <v-row>
         <v-col cols="12">
-          <v-icon @click="editDialog = true"  style="color: brown" class="rotate-180" size="120">
+          <v-icon
+            @click="deleteDialog = true"
+            style="color: brown"
+            class="rotate-180"
+            size="120"
+          >
             mdi-delete
           </v-icon>
         </v-col>
 
         <v-col cols="12">
           <v-icon
-          @click="deleteDialog = true"
-          style="color: gold"
-          class="rotate-180"
-          size="120"
-        >
-          mdi-square-edit-outline
-        </v-icon>
+            @click="editDialog = true"
+            style="color: gold"
+            class="rotate-180"
+            size="120"
+          >
+            mdi-square-edit-outline
+          </v-icon>
         </v-col>
-
       </v-row>
     </v-col>
 
-    <festival-edit id="1" :dialog="editDialog" @close="editDialog = false" />
-    <festival-delete id="1" :dialog="deleteDialog" @close="deleteDialog = false" />
-
+    <festival-edit :id="$route.params.id" :dialog="editDialog" @close="editDialog = false" />
+    <festival-delete
+    :id="$route.params.id"
+      :dialog="deleteDialog"
+      @close="deleteDialog = false"
+    />
   </v-row>
 </template>
 
@@ -136,11 +157,33 @@ export default {
 
         event_contact: "1234567890",
       },
+      urlImg: "",
+
+      event_data: {},
     };
   },
-
-  methods: {
-
+  inject: ["setHeader"],
+  created() {
+    this.setHeader();
   },
+
+  async fetch() {
+    try {
+      const res = await this.$axios.get(
+        `/api/events/${this.$route.params.id}?populate=*`
+      );
+
+      this.event_data = res.data.data;
+
+      this.urlImg =
+      process.env.AXIOS_URL+ 
+      this.event_data.attributes?.cover?.data?.attributes?.url;
+
+      console.log(this.event_data);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  methods: {},
 };
 </script>

@@ -17,7 +17,7 @@
         <v-row class="my-5">
           <v-col cols="2" sm="4"></v-col>
 
-          <v-col cols="8" sm="4" id="h_upload">
+          <!-- <v-col cols="8" sm="4" id="h_upload">
             <v-card
               outlined
               class="dropZone d-flex justify-center flex-column align-center rounded-xl"
@@ -44,7 +44,7 @@
               </div>
               <input id="upfile" type="file" @change="uploadImage" />
             </v-card>
-          </v-col>
+          </v-col> -->
 
           <v-col cols="2" sm="4"></v-col>
         </v-row>
@@ -55,7 +55,7 @@
               <div class="text-h5 font-weight-regular">Title</div>
             </v-col>
             <v-col cols="12">
-              <v-text-field outlined v-model="newItem.title"></v-text-field>
+              <v-text-field outlined v-model="editedItem.title"></v-text-field>
             </v-col>
           </v-row>
 
@@ -64,7 +64,10 @@
               <div class="text-h5 font-weight-regular">Description</div>
             </v-col>
             <v-col cols="12">
-              <v-textarea outlined v-model="newItem.description"></v-textarea>
+              <v-textarea
+                outlined
+                v-model="editedItem.description"
+              ></v-textarea>
             </v-col>
           </v-row>
 
@@ -78,7 +81,7 @@
                 :items="schools"
                 item-text="attributes.name"
                 item-value="id"
-                v-model="newItem.school"
+                v-model="editedItem.school"
               ></v-autocomplete>
             </v-col>
           </v-row>
@@ -88,7 +91,7 @@
               <div class="text-h5 font-weight-regular">Where</div>
             </v-col>
             <v-col cols="12">
-              <v-text-field outlined v-model="newItem.where"></v-text-field>
+              <v-text-field outlined v-model="editedItem.where"></v-text-field>
             </v-col>
           </v-row>
 
@@ -99,7 +102,7 @@
             <v-col cols="12">
               <v-datetime-picker
                 label="Select Datetime"
-                v-model="newItem.startingDatetime"
+                v-model="editedItem.dateTimeStart"
               >
               </v-datetime-picker>
             </v-col>
@@ -112,7 +115,7 @@
             <v-col cols="12">
               <v-datetime-picker
                 label="Select Datetime"
-                v-model="newItem.endingDatetime"
+                v-model="editedItem.dateTimeEnd"
               >
               </v-datetime-picker>
             </v-col>
@@ -123,7 +126,7 @@
               <div class="text-h5 font-weight-regular">Limit</div>
             </v-col>
             <v-col cols="12">
-              <v-text-field type="number" outlined v-model="newItem.limit"></v-text-field>
+              <v-text-field outlined v-model="editedItem.limit"></v-text-field>
             </v-col>
           </v-row>
 
@@ -137,7 +140,7 @@
                 :items="tags"
                 item-text="attributes.name"
                 item-value="id"
-                v-model="newItem.tags"
+                v-model="editedItem.tags"
                 multiple
                 chips
               ></v-autocomplete>
@@ -149,7 +152,10 @@
               <div class="text-h5 font-weight-regular">Contact Host</div>
             </v-col>
             <v-col cols="12">
-              <v-text-field outlined v-model="newItem.contact"></v-text-field>
+              <v-text-field
+                outlined
+                v-model="editedItem.contact"
+              ></v-text-field>
             </v-col>
           </v-row>
 
@@ -161,7 +167,7 @@
                 rounded="pill"
                 class="pa-3"
               >
-                <div class="text-center font-weight-bold text-h4">Create</div>
+                <div class="text-center font-weight-bold text-h4">Update</div>
               </v-card>
             </v-col>
           </v-row>
@@ -178,44 +184,77 @@ export default {
   name: "imageUpload",
   data() {
     return {
-      newItem: {
+      tags: [],
+      schools: [],
+
+      previewImage: null,
+      image: null,
+      show: true,
+
+      editedItem: {
         title: "",
         description: "",
         where: "",
-        startingDatetime: null,
-        endingDatetime: null,
+        dateTimeStart: null,
+        dateTimeEnd: null,
         limit: "",
         contact: "",
         school: "",
         tags: [],
       },
 
-      tags: [
-  
-      ],
-      schools: [],
-
-      previewImage: null,
-      image: null,
-      show: true,
+      defaultItem: {
+        title: "",
+        description: "",
+        where: "",
+        dateTimeStart: null,
+        dateTimeEnd: null,
+        limit: "",
+        contact: "",
+        school: "",
+        tags: [],
+      },
     };
   },
 
   async fetch() {
     try {
-      const res1 = await this.$axios.get(
-        `http://localhost:1337/api/schools`
-      );
+      const res1 = await this.$axios.get(`http://localhost:1337/api/schools`);
 
       this.schools = res1.data.data;
 
-      const res2 = await this.$axios.get(
-        `http://localhost:1337/api/tags`
-      );
+      const res2 = await this.$axios.get(`http://localhost:1337/api/tags`);
 
       this.tags = res2.data.data;
 
+      const res = await this.$axios.get(
+        `/api/events/${this.$route.params.id}?populate=*`
+      );
 
+      //   const res_format = res.data.data;
+
+      const bufferItem = JSON.parse(JSON.stringify(res.data.data.attributes));
+
+      this.editedItem.title = bufferItem.title;
+      this.editedItem.description = bufferItem.description;
+      this.editedItem.where = bufferItem.where;
+
+      // moment(bufferItem.dateTimeStart).format("YYYY-MM-DDThh:mm:ssZ")
+
+      this.editedItem.dateTimeStart = new Date(bufferItem.dateTimeStart);
+      this.editedItem.dateTimeEnd = new Date(bufferItem.dateTimeEnd);
+
+      console.log(bufferItem.dateTimeStart);
+
+      this.editedItem.limit = bufferItem.limit;
+      this.editedItem.contact = bufferItem.contact;
+
+      this.editedItem.school = bufferItem.school.data.id;
+      this.editedItem.tags = bufferItem.tags.data;
+
+      this.defaultItem = JSON.parse(JSON.stringify(this.editedItem));
+
+      console.log(this.editedItem);
     } catch (error) {
       console.log(error);
     }
@@ -239,26 +278,15 @@ export default {
       try {
         const formData = new FormData();
 
-        console.log(this.newItem);
-
-        formData.append("files.cover", this.image);
-
         formData.append(
           "data",
-          JSON.stringify({
-            title: this.newItem.title,
-            description: this.newItem.description,
-            where: this.newItem.where,
-            dateTimeStart: this.newItem.startingDatetime,
-            dateTimeEnd: this.newItem.endingDatetime,
-            limit: this.newItem.limit,
-            contact: this.newItem.contact,
-            school: this.newItem.school,
-            tags: this.newItem.tags,
-          })
+          JSON.stringify(this.editedItem)
         );
 
-        const res = await this.$axios.post("/api/events", formData);
+        const res = await this.$axios.put(
+          "/api/events/" + this.$route.params.id,
+          formData
+        );
         console.log(res);
       } catch (error) {
         console.log(error);

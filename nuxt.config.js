@@ -1,8 +1,23 @@
 import colors from 'vuetify/es5/util/colors'
+require("dotenv").config();
+
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+
+  server: {
+    port: process.env.PORT || 3000,
+    host: process.env.HOST || "localhost",
+  },
+
+  router: {
+    base: process.env.PREFIX || "/",
+  },
+
+  static: {
+    prefix: process.env.PREFIX || "/",
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -29,6 +44,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: "~/plugins/datetimePicker.js", mode: "client" },
+    { src: "~/plugins/moment.js", mode: "client" },
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -38,18 +55,23 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    "@nuxtjs/dotenv",
+
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    "@nuxtjs/auth-next",
+
+
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: process.env.AXIOS_URL || "/",
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -73,5 +95,34 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  env: {
+    AXIOS_URL: process.env.AXIOS_URL || 'default-url',
+  },
+
+  auth: {
+    // Options
+    strategies: {
+      local: {
+        token: {
+          property: 'jwt',
+        },
+        user: {
+          property: false,
+        },
+        endpoints: {
+          login: {
+            url: 'auth/local',
+            method: 'post',
+          },
+          user: {
+            url: 'users/me',
+            method: 'get',
+          },
+          logout: false,
+        },
+      },
+    },
   }
 }

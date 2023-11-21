@@ -1,35 +1,7 @@
 import { createVuetify} from 'vuetify'
 <template>
   <div>
-    <v-app-bar app color="rgb(143, 43, 49)" height="170%">
-      <nuxt-link to="/">
-        <img src="/mfueventlogo.png" alt="eventLogo" class="logoevent" />
-      </nuxt-link>
-      <v-card class="headcard">
-        <v-card-text>
-          <p class="HeadMarkText">MFU EVENTS</p>
-        </v-card-text>
-      </v-card>
-      <v-menu offset-y bottom transition="slide-x-reverse-transition">
-        <template v-slot:activator="{ on }">
-          <v-icon
-            style="color: white; cursor: pointer;"
-            size="70"
-            v-on="on"
-          >
-            mdi-account-tie
-          </v-icon>
-        </template>
-        <v-list style="width: 300px; overflow-y: auto;">
-          <v-list-item v-on:click="handleProfile">
-            <v-list-item-title>Profile</v-list-item-title>
-          </v-list-item>
-          <v-list-item  v-if="!isLoggedIn" v-on:click="handleLogin">
-            <v-list-item-title>Login</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-app-bar>
+
     <div>
       <v-container class="search-container" fluid>
         <v-row justify="center" align="center">
@@ -73,7 +45,7 @@ import { createVuetify} from 'vuetify'
       <v-container>
         <v-row>
           <v-col
-            v-for="(item, i) in all_event"
+            v-for="(item) in all_event"
             :key="item.id"
             cols="4"
             class="px-10"
@@ -90,7 +62,7 @@ import { createVuetify} from 'vuetify'
         fixed
         bottom
         right
-        color="brown"
+        color="#8F2B31"
         size="125"
         @click="toTop"
       >
@@ -109,7 +81,7 @@ export default {
     return {
       fab: true, // Ensure 'fab' is defined in your data
       isLoggedIn: false,
-      all_event: mockData,
+      all_event: null,
       search: "",
       selectedStatus: null,
       statusOptions: {
@@ -119,6 +91,26 @@ export default {
       },
     };
   },
+  inject: ["setHeader"],
+  created() {
+    this.setHeader("MFU EVENTS");
+  },
+
+  async fetch() {
+
+    try {
+      const res = await this.$axios.get("/api/events?populate=*");
+
+      this.all_event = res.data.data;
+
+
+      
+    } catch (error) {
+      console.log(error);
+    }
+
+  },
+
   methods: {
     handleSort() {
       // Add your sorting logic here
@@ -128,9 +120,11 @@ export default {
     },
     handleLogin() {
        this.isLoggedIn = true;
+       this.$router.push("/login");
+
     },
     toTop() {
-      this.$router.push("festival/new");
+      this.$router.push("/festival/new");
     },
   },
 };
@@ -158,74 +152,5 @@ export default {
   padding-bottom: -15px;
 }
 </style>
-<style scoped>
-.centercard {
-  margin: 15% 2vw;
-  margin-bottom: 20%;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 135px;
-  border: 5px solid #e8b71a;
-}
 
-.maintext {
-  margin-top: 10%;
-  font-family: "Montserrat", sans-serif;
-  text-align: center;
-  color: rgb(143, 43, 49);
-  font-size: 200%;
-  line-height: 1.5;
-  margin-left: 5%;
-  margin-right: 5%;
-}
-.logoevent {
-  height: 50%;
-  width: 150px;
-  border-radius: 10%;
-}
 
-.headcard {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  margin-left: 10%;
-  margin-right: 10%;
-  border-radius: 60px;
-  background-color: rgb(232, 183, 26);
-  height: 50%;
-  width: max-content;
-}
-
-.HeadMarkText {
-  color: black;
-  font-weight: 650;
-  font-family: "Montserrat", sans-serif;
-  font-size: 250%;
-  text-align: center;
-  margin-top: 13px;
-  margin-left: 10%;
-  margin-right: 10%;
-}
-@media (max-width: 900px) {
-  .HeadMarkText {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 600px) {
-  .HeadMarkText {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 400px) {
-  .HeadMarkText {
-    font-size: 10px;
-  }
-}
-</style>
