@@ -34,7 +34,7 @@
             </v-row>
           </v-card-text>
           <v-row justify="center" class="mt-1">
-            <v-col @click="userLogin" cols="5">
+            <v-col v-if="!loading" @click="userLogin" cols="5">
               <v-card
                 color="#E8B71A"
                 rounded="pill"
@@ -46,6 +46,12 @@
                   Login
                 </div>
               </v-card>
+            </v-col>
+            <v-col v-else cols="5" class="d-flex justify-center">
+              <v-progress-circular
+                indeterminate
+                color="#E8B71A"
+              ></v-progress-circular>
             </v-col>
           </v-row>
         </v-card>
@@ -62,16 +68,21 @@ export default {
       err: null,
       username: "",
       password: "",
+      loading: false,
     }
   },
   methods: {
     async userLogin() {
+      this.loading = true;
       try {
         await this.$auth.loginWith('local', {
           data: { identifier: this.username, password: this.password },
         })
       } catch (e) {
         if (e.response) this.err = e.response.data.error.message
+      }
+      finally {
+        this.loading = false; // Set loading to false when login completes (success or failure)
       }
     },
   },

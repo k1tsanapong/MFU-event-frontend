@@ -41,7 +41,7 @@ import { createVuetify} from 'vuetify'
           </v-col>
         </v-row>
       </v-container>
-
+    
       <v-container>
         <v-row>
           <v-col
@@ -100,6 +100,7 @@ export default {
   async fetch() {
 
     try {
+      
       const res = await this.$axios.get("/api/events?populate=*");
 
       this.all_event = res.data.data;
@@ -109,7 +110,6 @@ export default {
     } catch (error) {
       console.log(error);
     }
-
   },
 
   methods: {
