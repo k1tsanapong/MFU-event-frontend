@@ -1,3 +1,6 @@
+# Deploy
+https://mfu-event-frontend-568599804906.asia-southeast1.run.app
+
 # mfu-event-platform
 
 ## Build Setup
