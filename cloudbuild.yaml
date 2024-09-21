@@ -1,0 +1,62 @@
+steps:
+ # Build the container image
+ - name: 'gcr.io/cloud-builders/docker'
+   args: [ 'build', 
+           '--build-arg', 'BASE_URL=${_BASE_URL}',
+           '--build-arg', 'PORT=${_PORT}',
+           '--build-arg', 'HOST=${_HOST}',
+           '-t', '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REGISTRY}/${_REPO}:$COMMIT_SHA', 
+           '.' ]
+ # Push the container image to Container Registry
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ['push', '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REGISTRY}/${_REPO}:$COMMIT_SHA']
+ # Deploy container image to Cloud Run
+ - name: 'gcr.io/cloud-builders/gcloud'
+   entrypoint: gcloud
+   args:
+   - 'run'
+   - 'deploy'
+   - '${_REPO}'
+   - '--image'
+   - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REGISTRY}/${_REPO}:$COMMIT_SHA'
+   - '--region'
+   - '${_REGION_CLOUD_RUN}'
+   - '--allow-unauthenticated'
+   - '--platform'
+   - 'managed'
+   - '--port'
+   - '${_PORT}'
+   - '--set-env-vars'
+   - 'BASE_URL=${_BASE_URL},HOST=${_HOST}'
+   - '--max-instances'
+   - '1'
+   - '--memory'
+   - '256Mi'
+   - '--cpu'
+   - '1'
+
+    # Add IAM policy binding to allow all users to invoke the service
+ - name: 'gcr.io/cloud-builders/gcloud'
+   entrypoint: gcloud
+   args:
+   - 'run'
+   - 'services'
+   - 'add-iam-policy-binding'
+   - '${_REPO}'
+   - '--region=${_REGION_CLOUD_RUN}'
+   - '--member=allUsers'
+   - '--role=roles/run.invoker'
+
+images:
+ - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REGISTRY}/${_REPO}'
+ 
+substitutions:
+  _PROJECT_ID: 'kim-s-resume'
+  _REGISTRY: 'docker-repo'
+  _REPO: 'mfu-event-frontend'
+  _REGION: 'us-central1'
+  _REGION_CLOUD_RUN: 'asia-southeast1'
+  _PORT: '3000'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
